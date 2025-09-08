@@ -1,18 +1,27 @@
 import { AirQualityResponse, GeocodeResponse } from "@/types/openweather";
 
-
 const BASE_URL = 'https://api.openweathermap.org';
 
-let API_KEY = process.env.NEXT_PUBLIC_API_KEY
+let API_KEY = '';
 
 export class OpenWeatherAirQualityService {
-  
-  static async geocodeCity(cityName: string): Promise<GeocodeResponse[]> {
+  static setApiKey(apiKey: string) {
+    API_KEY = apiKey;
+  }
+
+  static getApiKey(): string {
     if (!API_KEY) {
+      API_KEY = localStorage.getItem('openweather_api_key') || '';
+    }
+    return API_KEY;
+  }
+  static async geocodeCity(cityName: string): Promise<GeocodeResponse[]> {
+    const apiKey = this.getApiKey();
+    if (!apiKey) {
       throw new Error('API key not configured');
     }
     
-    const response = await fetch(`${BASE_URL}/geo/1.0/direct?q=${encodeURIComponent(cityName)}&limit=1&appid=${API_KEY}`);
+    const response = await fetch(`${BASE_URL}/geo/1.0/direct?q=${encodeURIComponent(cityName)}&limit=1&appid=${apiKey}`);
     
     if (!response.ok) {
       throw new Error('Failed to find city coordinates');
@@ -28,11 +37,12 @@ export class OpenWeatherAirQualityService {
   }
 
   static async getAirQuality(lat: number, lon: number): Promise<AirQualityResponse> {
-    if (!API_KEY) {
+    const apiKey = this.getApiKey();
+    if (!apiKey) {
       throw new Error('API key not configured');
     }
     
-    const response = await fetch(`${BASE_URL}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+    const response = await fetch(`${BASE_URL}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch air quality data');

@@ -1,1 +1,1 @@
-export type AppState = 'search' | 'loading' | 'display' | 'error';
+export type AppState = 'search' | 'loading' | 'display' | 'error' | 'setup';
