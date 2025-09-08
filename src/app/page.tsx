@@ -1,9 +1,10 @@
 "use client";
+import { AQIDisplay } from "@/components/air-quality/AirQualityIndexDisplay";
 import { ErrorDisplay } from "@/components/air-quality/ErrorDisplay";
 import { LoadingDisplay } from "@/components/air-quality/LoadingDisplay";
 import { SearchForm } from "@/components/air-quality/SearchForm";
 import { AppState } from "@/types/AppState";
-import Image from "next/image";
+import { AirQualityData, GeocodeResponse } from "@/types/openweather";
 import { useState } from "react";
 
 export default function Home() {
@@ -11,15 +12,31 @@ export default function Home() {
   const [state, setState] = useState<AppState>("search");
   const [error, setError] = useState<string>('');
 
+  const [airQualityData, setAirQualityData] = useState<{
+    airQuality: { main: { aqi: number }; 
+    components: AirQualityData['components'] };
+    location: GeocodeResponse;
+  } | null>(null);
+
   const handleSearch = async (cityName: string) => {
-    // setError("TEST ERROR MESSAGE");
-    setState('loading');
+    // setState('loading');
+    setError('');
+    
+    try {
+      //TODO: CALL API TO GET DATA
+      setState('display');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+      setError(errorMessage);
+      setState('error');
+    }
   };
 
   const handleNewSearch = () => {
     setState('search');
-    // setAirQualityData(null);
-    // setError('');
+    //reset data and error message
+    setAirQualityData(null);
+    setError('');
   };
 
   const handleRetry = () => {
@@ -44,6 +61,15 @@ export default function Home() {
           <ErrorDisplay 
             error={error}
             onRetry={handleRetry}
+          />
+        )}
+
+        {state === 'display' && (
+          <AQIDisplay 
+          //TODO: PASS DATA HERE AFTER SEARCH FORM
+            // airQuality
+            // location={airQualityData.location}
+            onNewSearch={handleNewSearch}
           />
         )}
 
