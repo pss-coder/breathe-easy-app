@@ -17,7 +17,7 @@ npm install
 
 Secondly, set up your env keys in `.env.local`, for example:
 ```bash
-NEXT_PUBLIC_API_KEY=<open-weather-api-key>
+OPENWEATHER_API_KEY=<open-weather-api-key>
 ```
 
 Lastly, run the development server:
