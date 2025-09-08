@@ -76,6 +76,8 @@
   --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
   --sidebar-border: oklch(0.923 0.003 48.717);
   --sidebar-ring: oklch(0.709 0.01 56.259);
+
+  
 }
 
 .dark {
@@ -113,6 +115,20 @@
 }
 
 @layer base {
+  :root {
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(0 0% 98%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(0 0% 99%) 100%);
+
+    /* Shadows */
+  --shadow-soft: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px 0 hsl(0 0% 0% / 0.06);
+  --shadow-medium: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.06);
+  --shadow-large: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -2px hsl(0 0% 0% / 0.05);
+
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
   * {
     @apply border-border outline-ring/50;
   }
@@ -120,3 +136,28 @@
     @apply bg-background text-foreground;
   }
 }
+
+.aqi-number {
+    @apply text-6xl font-black tracking-tight;
+    line-height: 1;
+  }
+
+.aqi-card {
+    background: hsl((0 0% 100%));
+    box-shadow: var(--shadow-medium);
+    transition: var(--transition-smooth);
+  }
+
+ .aqi-card:hover {
+    box-shadow: var(--shadow-large);
+    transform: translateY(-2px);
+  }
+
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
