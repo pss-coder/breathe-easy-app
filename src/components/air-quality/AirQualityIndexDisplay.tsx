@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { MapPin, Wind } from 'lucide-react';
 import { AirQualityData, GeocodeResponse } from '@/types/openweather';
-import { dummyAirQualityResponse, formatLocation, getAQICategory, getPollutants } from '@/lib/air-quality-display-helper';
+import { formatLocation, getAQICategory, getPollutants } from '@/lib/air-quality-display-helper';
 import { Button } from '../ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
@@ -53,7 +53,7 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
                   Air Quality Index
                 </p>
                 <div className="text-4xl font-bold">
-                  {dummyAirQualityResponse.list[0].main.aqi}
+                  {airQuality.main.aqi}
                 </div>
               </div>
 
