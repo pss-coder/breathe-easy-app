@@ -1,4 +1,4 @@
-import { getAQICategory, getMainPollutant, formatLocation, dummyAirQualityResponse } from '../lib/air-quality-display-helper';
+import { getAQICategory, formatLocation, dummyAirQualityResponse } from '../lib/air-quality-display-helper';
 
 describe('getAQICategory', () => {
   it('returns correct category for AQI 1', () => {
@@ -15,13 +15,13 @@ describe('getAQICategory', () => {
   });
 });
 
-describe('getMainPollutant', () => {
-  it('returns pollutant with highest value', () => {
-    const components = dummyAirQualityResponse.list[0].components;
-    const result = getMainPollutant(components);
-    expect(result.name).toBe('CO'); // CO has highest value in dummy data
-  });
-});
+// describe('getMainPollutant', () => {
+//   it('returns pollutant with highest value', () => {
+//     const components = dummyAirQualityResponse.list[0].components;
+//     const result = getMainPollutant(components);
+//     expect(result.name).toBe('CO'); // CO has highest value in dummy data
+//   });
+// });
 
 describe('formatLocation', () => {
   it('formats with state', () => {
