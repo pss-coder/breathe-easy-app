@@ -1,12 +1,8 @@
-
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { Card } from '../ui/card';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-// import { Input } from '@/components/ui/input';
-// import { Button } from '@/components/ui/button';
-// import { Card } from '@/components/ui/card';
 
 interface SearchFormProps {
   onSearch: (city: string) => void;
