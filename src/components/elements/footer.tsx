@@ -25,8 +25,8 @@ const navigation = {
 export default function Footer() {
   return (
     <footer className="bg-card" aria-label="Site footer">
-      <div className="mx-auto max-w-7xl overflow-hidden px-6 pb-4">
-        <nav className="flex justify-center gap-x-10">
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 p-4">
+        <nav className="flex justify-center gap-x-8">
           {navigation.social.map((item) => (
             <a
               key={item.name}

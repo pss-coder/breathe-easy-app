@@ -1,4 +1,4 @@
-import { getAQICategory, formatLocation, dummyAirQualityResponse } from '../lib/air-quality-display-helper';
+import { getAQICategory, formatLocation } from '../lib/air-quality-display-helper';
 
 describe('getAQICategory', () => {
   it('returns correct category for AQI 1', () => {

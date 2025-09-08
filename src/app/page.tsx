@@ -5,7 +5,6 @@ import { LoadingDisplay } from "@/components/air-quality/LoadingDisplay";
 import { SearchForm } from "@/components/air-quality/SearchForm";
 import Footer from "@/components/elements/footer";
 import { Header } from "@/components/elements/header";
-import { OpenWeatherAirQualityService } from "@/lib/open-weather-api";
 import { AppState } from "@/types/AppState";
 import { AirQualityData, GeocodeResponse } from "@/types/openweather";
 import { useEffect, useState } from "react";
@@ -24,7 +23,6 @@ export default function Home() {
   } | null>(null);
 
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
-  const [showHistory, setShowHistory] = useState(false);
 
 
   // Load search history from localStorage on component mount
@@ -58,12 +56,18 @@ export default function Home() {
     setError('');
     
     try {
-      //TODO: CALL API TO GET DATA
-      const data = await OpenWeatherAirQualityService.getAirQualityByCity(cityName);
-      setAirQualityData(data);
+      // const data = await OpenWeatherAirQualityService.getAirQualityByCity(cityName);
+      const response = await fetch(`/aqi?city=${cityName}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch air quality data');
+      }
+      const data = await response.json();
+    setAirQualityData(data);
       setState('display');
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+      console.log(errorMessage)
       setError(errorMessage);
       setState('error');
     }

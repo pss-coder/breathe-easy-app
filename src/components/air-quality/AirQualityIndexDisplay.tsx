@@ -1,8 +1,7 @@
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { MapPin, Wind } from 'lucide-react';
 import { AirQualityData, GeocodeResponse } from '@/types/openweather';
-import { dummyAirQualityResponse, dummyGeocodeResponse, formatLocation, getAQICategory, getPollutants } from '@/lib/air-quality-display-helper';
+import { dummyAirQualityResponse, formatLocation, getAQICategory, getPollutants } from '@/lib/air-quality-display-helper';
 import { Button } from '../ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
@@ -69,7 +68,7 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
                 </Badge> */}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline">{aqiCategory.level}</Button>
+                    <Button variant="outline" className={`dark:${aqiCategory.color} dark:hover:${aqiCategory.color}/2 `}>{aqiCategory.level}</Button>
                   </TooltipTrigger>
                   <TooltipContent side='bottom'>
                     <p className="opacity-90">{aqiCategory.description}</p>
@@ -95,8 +94,17 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
                     className="flex items-center justify-between gap-2 py-1"
                   >
                     <span className="flex items-center gap-2">
-                      <Wind className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
-                      <span className="font-semibold">{pollutant.name}</span>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="secondary">
+                              <Wind className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
+                              <span className="font-semibold">{pollutant.name}</span>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side='left'>
+                          <p className="opacity-90">{pollutant.description}</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </span>
                     <span className="text-muted-foreground text-right min-w-[70px]">
                       {pollutant.value} {pollutant.unit}

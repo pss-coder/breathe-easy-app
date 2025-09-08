@@ -21,6 +21,12 @@ export const ErrorDisplay = ({ error, onRetry }: ErrorDisplayProps) => {
         message: 'Unable to connect to the air quality service. Please check your internet connection.',
       };
     }
+    // if (error.includes('API') || error.includes('not')) {
+    //   return {
+    //     title: 'API Key Not Found',
+    //     message: 'Unable to connect to the air quality service. Please check your API Key Config.',
+    //   };
+    // }
     return {
       title: 'Something Went Wrong',
       message: 'We encountered an issue while fetching air quality data. Please try again.',
