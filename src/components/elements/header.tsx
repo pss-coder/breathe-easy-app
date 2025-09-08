@@ -3,28 +3,12 @@
 import * as React from "react"
 import Link from "next/link"
 import { ThemeToggleMenu } from "../theme/theme-toggle";
-import { Button } from "../ui/button";
-
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-]
 
 interface HeaderProps {
   onNewSearch: () => void;
 }
 
-export function Header({ onNewSearch }: HeaderProps) {
+export function Header({  }: HeaderProps) {
   return (
     <header className="bg-card">
         <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-4 lg:px-8">
@@ -41,9 +25,9 @@ export function Header({ onNewSearch }: HeaderProps) {
                     className="hidden h-8 w-auto dark:block"
                     />
                 </a> */}
-                <a href="/">
+                <Link href="/">
                   <span className="font-bold text-xm">Breathe Easy</span>
-                </a>
+                </Link>
                 
             </div>
 
@@ -63,16 +47,16 @@ export function Header({ onNewSearch }: HeaderProps) {
             </svg>
           </button> */}
           {/* API Settings? */}
-          <Button 
+          {/* <Button 
             onClick={() => {}}
-          />
+          /> */}
 
           {/* Search */}
-          <Button
+          {/* <Button
             onClick={onNewSearch}
           >
             Search
-          </Button>
+          </Button> */}
 
           <ThemeToggleMenu />
             </div>

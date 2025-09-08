@@ -1,8 +1,9 @@
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { MapPin, Wind } from 'lucide-react';
 import { AirQualityData, GeocodeResponse } from '@/types/openweather';
-import { dummyAirQualityResponse, dummyGeocodeResponse, formatLocation, getAQICategory, getPollutants } from '@/lib/air-quality-display-helper';
+import { dummyAirQualityResponse, formatLocation, getAQICategory, getPollutants } from '@/lib/air-quality-display-helper';
+import { Button } from '../ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
 interface AQIDisplayProps {
   airQuality: {
@@ -23,38 +24,57 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
   const locationText = formatLocation(location.name, location.country, location.state);
 
   return (
-    <div className="w-full max-w-lg mx-auto">
+    //  max-w-lg
+    <div className="w-full mx-auto">
       <div className="flex flex-col md:flex-row gap-6">
-        {/* Left column: Location Header & Main AQI Display */}
+        {/* Left column */}
         <div className="flex flex-col gap-6 flex-1">
-          <Card className="aqi-card p-6">
+          {/* Location */}
+          <Card aria-labelledby="location-heading" className="aqi-card p-6">
             <div className="flex items-center gap-2 text-center justify-center">
-              <MapPin className="w-5 h-5 text-muted-foreground" />
-              <h2 className="text-xl font-semibold">{locationText}</h2>
+              <MapPin className="w-5 h-5 text-muted-foreground" aria-hidden="true" />
+              <h2 id="location-heading" className="text-xl font-semibold">
+                {locationText}
+              </h2>
             </div>
           </Card>
 
-          <Card className="aqi-card p-8 text-center">
+          {/* AQI */}
+         <Card
+          aria-labelledby="air quality index heading"
+          className={`aqi-card p-8 text-center rounded-2xl shadow-md transition-colors ${aqiCategory.color}  `}
+        >
             <div className="space-y-4">
               <div>
-                <p className="text-sm text-muted-foreground uppercase tracking-wide mb-2">
+                <p
+                  id="aqi-heading"
+                  className="text-sm uppercase tracking-wide mb-2 opacity-90 font-bold"
+                >
                   Air Quality Index
                 </p>
-                <div className={`text-2xl font-bold`}>
+                <div className="text-4xl font-bold">
                   {dummyAirQualityResponse.list[0].main.aqi}
                 </div>
               </div>
-              
+
               <div className="space-y-2">
-                <Badge 
-                  variant="default" 
-                  className={`${aqiCategory.color} text-white px-4 py-2 text-lg font-semibold`}
+                {/* <Badge
+                  variant="secondary"
+                  className={`px-4 py-2 text-lg font-semibold border-none 
+                     backdrop-blur-sm 
+                    `}
                 >
                   {aqiCategory.level}
-                </Badge>
-                <p className="text-muted-foreground">
-                  {aqiCategory.description}
-                </p>
+                </Badge> */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="outline" className={`dark:${aqiCategory.color} dark:hover:${aqiCategory.color}/2 `}>{aqiCategory.level}</Button>
+                  </TooltipTrigger>
+                  <TooltipContent side='bottom'>
+                    <p className="opacity-90">{aqiCategory.description}</p>
+                  </TooltipContent>
+                </Tooltip>
+               
               </div>
             </div>
           </Card>
@@ -62,9 +82,11 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
 
         {/* Right column: Pollutants */}
         <div className="flex flex-col gap-6 flex-1 justify-stretch">
-          <Card className="aqi-card p-6 h-full">
+          <Card aria-labelledby="pollutants heading" className="aqi-card p-6 h-full">
             <div>
-              <p className="text-sm text-muted-foreground mb-2">Pollutants</p>
+              <h3 id="pollutants-heading" className="text-sm text-muted-foreground mb-2">
+                Pollutants
+              </h3>
               <ul className="space-y-2">
                 {pollutants.map((pollutant, idx) => (
                   <li
@@ -72,8 +94,17 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
                     className="flex items-center justify-between gap-2 py-1"
                   >
                     <span className="flex items-center gap-2">
-                      <Wind className="w-4 h-4 text-muted-foreground" />
-                      <span className="font-semibold">{pollutant.name}</span>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="secondary">
+                              <Wind className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
+                              <span className="font-semibold">{pollutant.name}</span>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side='left'>
+                          <p className="opacity-90">{pollutant.description}</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </span>
                     <span className="text-muted-foreground text-right min-w-[70px]">
                       {pollutant.value} {pollutant.unit}
@@ -83,27 +114,33 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
               </ul>
             </div>
           </Card>
-          
         </div>
       </div>
 
-      <Card className="aqi-card p-6 mt-6 ">
-            <div className="space-y-2">
-              <h3 className="font-semibold">Health Recommendation</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {aqiCategory.recommendation}
-              </p>
-            </div>
-          </Card>
+      {/* Health Recommendation */}
+      <Card
+        aria-labelledby="health-recommendation-heading"
+        className="aqi-card p-6 mt-6"
+      >
+        <div className="space-y-2">
+          <h3 id="health-recommendation-heading" className="font-semibold">
+            Health Recommendation
+          </h3>
+          <p className="text-muted-foreground leading-relaxed">
+            {aqiCategory.recommendation}
+          </p>
+        </div>
+      </Card>
 
-      {/* New Search Button: always full width below */}
-      <Card className="aqi-card p-4 mt-6">
-        <button
+      {/* Search Again */}
+      <Card className="aqi-card p-4 mt-6 cursor-pointer">
+        <Button
+          variant="ghost"
           onClick={onNewSearch}
-          className="w-full text-primary hover:text-primary/80 font-medium transition-colors"
+          className="cursor-pointer hover:bg-white w-full text-primary hover:text-primary/80 font-medium transition-colors"
         >
           Search Another City
-        </button>
+        </Button>
       </Card>
     </div>
   );
