@@ -95,7 +95,8 @@ export const getPollutants = (components: AirQualityData['components']): {
   // const highestPollutant = pollutants.reduce((max, current) => {
   //   return current.value > max.value ? current : max;
   // });
-  return pollutants;
+  // get the value with the highest on top
+  return pollutants.sort((a,b) => b.value - a.value);
 };
 
 export const formatLocation = (cityName: string, country: string, state?: string): string => {
