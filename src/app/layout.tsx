@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ThemeToggleMenu } from "@/components/theme/theme-toggle";
 import Footer from "@/components/elements/footer";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <TooltipProvider>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -39,6 +41,7 @@ export default function RootLayout({
             {/* <ThemeToggleMenu /> */}
             {children}
           </ThemeProvider>
+        </TooltipProvider>
 
       </body>
     </html>

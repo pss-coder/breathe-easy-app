@@ -34,45 +34,45 @@ export const dummyGeocodeResponse: GeocodeResponse = {
 export const getAQICategory = (aqi: number): AQICategory => {
   if (aqi === 1) {
     return {
-      level: 'Good',
+      level: 'Good 🌿',
       color: 'bg-green-500',
       description: 'Air quality is satisfactory',
-      recommendation: 'Perfect day for outdoor activities! Enjoy the fresh air.'
+      recommendation: 'Perfect day for outdoor activities! Enjoy the fresh air. 🌞'
     };
   } else if (aqi === 2) {
     return {
-      level: 'Fair',
+      level: 'Fair 🍃',
       color: 'bg-green-300',
       description: 'Air quality is acceptable',
-      recommendation: 'Great for most outdoor activities. Sensitive individuals should consider limiting prolonged outdoor exertion.'
+      recommendation: 'Great for most outdoor activities. Sensitive individuals should consider limiting prolonged outdoor exertion. 🌤️'
     };
   } else if (aqi === 3) {
     return {
-      level: 'Moderate',
+      level: 'Moderate 😷',
       color: 'bg-gray-500',
       description: 'Unhealthy for sensitive groups',
-      recommendation: 'Sensitive individuals should reduce outdoor activities. Everyone else can enjoy normal activities.'
+      recommendation: 'Sensitive individuals should reduce outdoor activities. Everyone else can enjoy normal activities. 🏃‍♂️'
     };
   } else if (aqi === 4) {
     return {
-      level: 'Poor',
+      level: 'Poor ⚠️',
       color: 'bg-yellow-500',
       description: 'Unhealthy for everyone',
-      recommendation: 'Consider limiting outdoor activities. Wear a mask if you must go outside.'
+      recommendation: 'Consider limiting outdoor activities. Wear a mask if you must go outside. 😷'
     };
   } else if (aqi === 5) {
     return {
-      level: 'Very Poor',
+      level: 'Very Poor 🔥',
       color: 'bg-red-500',
       description: 'Very unhealthy conditions',
-      recommendation: 'Avoid outdoor activities. Stay indoors and keep windows closed.'
+      recommendation: 'Avoid outdoor activities. Stay indoors and keep windows closed. 🏠'
     };
   } else {
     return {
-      level: 'Unknown',
+      level: 'Unknown ❓',
       color: 'aqi-moderate',
       description: 'Air quality data unavailable',
-      recommendation: 'Unable to provide recommendations at this time.'
+      recommendation: 'Unable to provide recommendations at this time. 🌫️'
     };
   }
 };

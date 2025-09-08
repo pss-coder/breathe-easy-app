@@ -4,6 +4,7 @@ import { MapPin, Wind } from 'lucide-react';
 import { AirQualityData, GeocodeResponse } from '@/types/openweather';
 import { dummyAirQualityResponse, dummyGeocodeResponse, formatLocation, getAQICategory, getPollutants } from '@/lib/air-quality-display-helper';
 import { Button } from '../ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
 interface AQIDisplayProps {
   airQuality: {
@@ -42,7 +43,7 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
           {/* AQI */}
          <Card
           aria-labelledby="air quality index heading"
-          className={`p-8 text-center rounded-2xl shadow-md transition-colors ${aqiCategory.color}  `}
+          className={`aqi-card p-8 text-center rounded-2xl shadow-md transition-colors ${aqiCategory.color}  `}
         >
             <div className="space-y-4">
               <div>
@@ -58,15 +59,23 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
               </div>
 
               <div className="space-y-2">
-                <Badge
-                  variant="default"
+                {/* <Badge
+                  variant="secondary"
                   className={`px-4 py-2 text-lg font-semibold border-none 
                      backdrop-blur-sm 
                     `}
                 >
                   {aqiCategory.level}
-                </Badge>
-                <p className="opacity-90">{aqiCategory.description}</p>
+                </Badge> */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="outline">{aqiCategory.level}</Button>
+                  </TooltipTrigger>
+                  <TooltipContent side='bottom'>
+                    <p className="opacity-90">{aqiCategory.description}</p>
+                  </TooltipContent>
+                </Tooltip>
+               
               </div>
             </div>
           </Card>
@@ -116,12 +125,11 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
       </Card>
 
       {/* Search Again */}
-      <Card className="aqi-card p-4 mt-6">
+      <Card className="aqi-card p-4 mt-6 cursor-pointer">
         <Button
-          onClick={onNewSearch}
           variant="ghost"
-          className="w-full text-primary hover:text-primary/80 font-medium transition-colors"
-          aria-label="Search for another city"
+          onClick={onNewSearch}
+          className="cursor-pointer hover:bg-white w-full text-primary hover:text-primary/80 font-medium transition-colors"
         >
           Search Another City
         </Button>
