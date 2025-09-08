@@ -6,7 +6,7 @@
 - Mobile/tablet responsive
 
 ## Vercel Link
-[Live Demo](todo) <!-- Replace 'todo' with your actual Vercel deployment URL -->
+[Live Demo](breathe-easy-gilt.vercel.app)
 
 ## Getting Started
 
