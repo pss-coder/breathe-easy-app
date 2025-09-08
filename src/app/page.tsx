@@ -1,5 +1,6 @@
 "use client";
 import { ErrorDisplay } from "@/components/air-quality/ErrorDisplay";
+import { LoadingDisplay } from "@/components/air-quality/LoadingDisplay";
 import { SearchForm } from "@/components/air-quality/SearchForm";
 import { AppState } from "@/types/AppState";
 import Image from "next/image";
@@ -33,6 +34,10 @@ export default function Home() {
         
         {state === 'search' && (
           <SearchForm onSearch={handleSearch} isLoading={false} />
+        )}
+
+        {state === 'loading' && (
+          <LoadingDisplay />
         )}
 
          {state === 'error' && (
