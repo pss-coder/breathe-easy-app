@@ -3,6 +3,7 @@ import { AQIDisplay } from "@/components/air-quality/AirQualityIndexDisplay";
 import { ErrorDisplay } from "@/components/air-quality/ErrorDisplay";
 import { LoadingDisplay } from "@/components/air-quality/LoadingDisplay";
 import { SearchForm } from "@/components/air-quality/SearchForm";
+import { OpenWeatherAirQualityService } from "@/lib/open-weather-api";
 import { AppState } from "@/types/AppState";
 import { AirQualityData, GeocodeResponse } from "@/types/openweather";
 import { useState } from "react";
@@ -19,11 +20,13 @@ export default function Home() {
   } | null>(null);
 
   const handleSearch = async (cityName: string) => {
-    // setState('loading');
+    setState('loading');
     setError('');
     
     try {
       //TODO: CALL API TO GET DATA
+      const data = await OpenWeatherAirQualityService.getAirQualityByCity(cityName);
+      setAirQualityData(data);
       setState('display');
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
@@ -64,11 +67,11 @@ export default function Home() {
           />
         )}
 
-        {state === 'display' && (
+        {state === 'display' && airQualityData && (
           <AQIDisplay 
           //TODO: PASS DATA HERE AFTER SEARCH FORM
-            // airQuality
-            // location={airQualityData.location}
+            airQuality={airQualityData.airQuality}
+            location={airQualityData.location}
             onNewSearch={handleNewSearch}
           />
         )}

@@ -3,21 +3,25 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Wind } from 'lucide-react';
 import { AirQualityData, GeocodeResponse } from '@/types/openweather';
-import { dummyAirQualityResponse, dummyGeocodeResponse, formatLocation, getAQICategory, getMainPollutant } from '@/lib/air-quality-display-helper';
+import { dummyAirQualityResponse, dummyGeocodeResponse, formatLocation, getAQICategory, getPollutants } from '@/lib/air-quality-display-helper';
 
 interface AQIDisplayProps {
-  airQuality?: {
+  airQuality: {
     main: { aqi: number };
     components: AirQualityData['components'];
   };
-  location?: GeocodeResponse;
+  location: GeocodeResponse;
   onNewSearch: () => void;
 }
 
 export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProps) => {
-  const aqiCategory = getAQICategory(dummyAirQualityResponse.list[0].main.aqi);
-  const mainPollutant = getMainPollutant(dummyAirQualityResponse.list[0].components);
-  const locationText = formatLocation(dummyGeocodeResponse.name, dummyGeocodeResponse.country, dummyGeocodeResponse.state);
+  // const aqiCategory = getAQICategory(dummyAirQualityResponse.list[0].main.aqi);
+  // const mainPollutant = getMainPollutant(dummyAirQualityResponse.list[0].components);
+  // const locationText = formatLocation(dummyGeocodeResponse.name, dummyGeocodeResponse.country, dummyGeocodeResponse.state);
+
+   const aqiCategory = getAQICategory(airQuality.main.aqi);
+  const pollutants = getPollutants(airQuality.components);
+  const locationText = formatLocation(location.name, location.country, location.state);
 
   return (
     <div className="w-full max-w-lg mx-auto space-y-6">
@@ -56,15 +60,30 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
       </Card>
 
       {/* Main Pollutant */}
-      <Card className="aqi-card p-6">
+      {/* <Card className="aqi-card p-6">
         <div className="flex items-center gap-3">
           <Wind className="w-5 h-5 text-muted-foreground" />
           <div className="flex-1">
-            <p className="text-sm text-muted-foreground">Main Pollutant</p>
+            <p className="text-sm text-muted-foreground">Pollutants</p>
             <p className="font-semibold">
-              {mainPollutant.name}: {mainPollutant.value.toFixed(1)} {mainPollutant.unit}
+              {pollutants[0].name}: {pollutants[0].value.toFixed(1)} {pollutants[0].unit}
             </p>
           </div>
+        </div>
+      </Card> */}
+
+      <Card className="aqi-card p-6">
+        <div className="flex items-center gap-3">
+          <Wind className="w-5 h-5 text-muted-foreground" />
+          <p className="text-sm text-muted-foreground mb-2">Pollutants</p>
+          <ul className="space-y-1">
+            {pollutants.map((pollutant, idx) => (
+              <li key={pollutant.name + idx} className="flex items-center gap-2">
+                <span className="font-semibold">{pollutant.name}: </span>
+                <span className="text-muted-foreground">{pollutant.value} {pollutant.unit}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </Card>
 

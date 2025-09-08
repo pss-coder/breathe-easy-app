@@ -77,7 +77,11 @@ export const getAQICategory = (aqi: number): AQICategory => {
   }
 };
 
-export const getMainPollutant = (components: AirQualityData['components']): MainPollutant => {
+export const getPollutants = (components: AirQualityData['components']): {
+  name: string;
+  value: number;
+  unit: string;
+}[] => {
   const pollutants = [
     { name: 'PM2.5', value: components.pm2_5, unit: 'μg/m³' },
     { name: 'PM10', value: components.pm10, unit: 'μg/m³' },
@@ -88,11 +92,10 @@ export const getMainPollutant = (components: AirQualityData['components']): Main
   ];
 
   // Fids the pollutant with the highest concentration relative to typical safe levels
-  const highestPollutant = pollutants.reduce((max, current) => {
-    return current.value > max.value ? current : max;
-  });
-
-  return highestPollutant;
+  // const highestPollutant = pollutants.reduce((max, current) => {
+  //   return current.value > max.value ? current : max;
+  // });
+  return pollutants;
 };
 
 export const formatLocation = (cityName: string, country: string, state?: string): string => {
