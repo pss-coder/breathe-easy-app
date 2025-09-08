@@ -1,0 +1,1 @@
+export type AppState = 'search' | 'loading' | 'display' | 'error';
