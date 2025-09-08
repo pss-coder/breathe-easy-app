@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error) {
+  } catch (_) {
     return new Response(JSON.stringify({ error: 'Failed to fetch air quality data' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
