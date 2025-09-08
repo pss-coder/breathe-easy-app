@@ -23,7 +23,7 @@ export const SearchForm = ({ onSearch, isLoading }: SearchFormProps) => {
     <Card className="aqi-card p-6 w-full max-w-md mx-auto">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold mb-2">Air Quality Check</h1>
+          <h1 className="text-3xl font-bold mb-2">Breathe Easy</h1>
           <p className="text-muted-foreground">
             Get real-time air quality information for any city
           </p>

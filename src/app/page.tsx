@@ -12,8 +12,8 @@ export default function Home() {
   const [error, setError] = useState<string>('');
 
   const handleSearch = async (cityName: string) => {
-    setError("TEST ERROR MESSAGE");
-    setState('error');
+    // setError("TEST ERROR MESSAGE");
+    setState('loading');
   };
 
   const handleNewSearch = () => {
