@@ -5,9 +5,6 @@
 - Error/loading handling
 - Mobile/tablet responsive
 
-## Vercel Link
-[Live Demo](breathe-easy-gilt.vercel.app)
-
 ## Getting Started
 
 First, install dependencies:
