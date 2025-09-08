@@ -63,16 +63,16 @@ export function Header({ onNewSearch }: HeaderProps) {
             </svg>
           </button> */}
           {/* API Settings? */}
-          <Button 
+          {/* <Button 
             onClick={() => {}}
-          />
+          /> */}
 
           {/* Search */}
-          <Button
+          {/* <Button
             onClick={onNewSearch}
           >
             Search
-          </Button>
+          </Button> */}
 
           <ThemeToggleMenu />
             </div>
