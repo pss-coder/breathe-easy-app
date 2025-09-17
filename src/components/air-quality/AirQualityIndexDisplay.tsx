@@ -133,15 +133,15 @@ export const AQIDisplay = ({ airQuality, location, onNewSearch }: AQIDisplayProp
       </Card>
 
       {/* Search Again */}
-      <Card className="aqi-card p-4 mt-6 cursor-pointer">
+      {/* <Card className="aqi-card p-4 mt-6 cursor-pointer"> */}
         <Button
-          variant="ghost"
+          variant="outline"
           onClick={onNewSearch}
-          className="cursor-pointer hover:bg-white w-full text-primary hover:text-primary/80 font-medium transition-colors"
+          className="aqi-card p-8 mt-6 cursor-pointer w-full text-primary hover:text-primary/80 font-medium transition-colors"
         >
           Search Another City
         </Button>
-      </Card>
+      {/* </Card> */}
     </div>
   );
 };
