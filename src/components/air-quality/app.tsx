@@ -43,47 +43,48 @@ export default function AirQualityApp() {
     }
   }, [searchHistory]);
 
-  const handleSearch = async (cityName: string) => {
-    // setState('loading');
-    dispatch(setState('loading'));
-    dispatch(setError(''))
+  // How can we bring this to the component instead? 
+  // const handleSearch = async (cityName: string) => {
+  //   // setState('loading');
+  //   dispatch(setState('loading'));
+  //   dispatch(setError(''))
     
-    try {
-      // const data = await OpenWeatherAirQualityService.getAirQualityByCity(cityName);
-      const response = await fetch(`/aqi?city=${cityName}`);
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to fetch air quality data');
-      }
-      const data = await response.json();
-      dispatch(setAirQualityData(data));
-      dispatch(setState('display'));
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
-      console.log(errorMessage)
+  //   try {
+  //     // const data = await OpenWeatherAirQualityService.getAirQualityByCity(cityName);
+  //     const response = await fetch(`/aqi?city=${cityName}`);
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.error || 'Failed to fetch air quality data');
+  //     }
+  //     const data = await response.json();
+  //     dispatch(setAirQualityData(data));
+  //     dispatch(setState('display'));
+  //   } catch (err) {
+  //     const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+  //     console.log(errorMessage)
 
-      dispatch(setError(errorMessage));
-      dispatch(setState('error'));
-    }
-  };
+  //     dispatch(setError(errorMessage));
+  //     dispatch(setState('error'));
+  //   }
+  // };
 
-  const handleAddToHistory = (cityName: string) => {
-    // remove if already exists
-    const filtered = searchHistory.filter(item => item.toLowerCase() !== cityName.toLowerCase());
-    dispatch(setSearchHistory(
-      // place ontop and only show recent 10
-      [cityName, ...filtered].slice(0, 10)
-    ));
-  };
+  // const handleAddToHistory = (cityName: string) => {
+  //   // remove if already exists
+  //   const filtered = searchHistory.filter(item => item.toLowerCase() !== cityName.toLowerCase());
+  //   dispatch(setSearchHistory(
+  //     // place ontop and only show recent 10
+  //     [cityName, ...filtered].slice(0, 10)
+  //   ));
+  // };
 
   const handleRemoveFromHistory = (cityToRemove: string) => {
     dispatch(setSearchHistory(searchHistory.filter(item => item !== cityToRemove)))
   };
 
-  const handleClearHistory = () => {
-    // setSearchHistory([]);
-    dispatch(setSearchHistory([]));
-  };
+  // const handleClearHistory = () => {
+  //   // setSearchHistory([]);
+  //   dispatch(setSearchHistory([]));
+  // };
 
   const handleNewSearch = () => {
     dispatch(setState('search')); // change to search vie 

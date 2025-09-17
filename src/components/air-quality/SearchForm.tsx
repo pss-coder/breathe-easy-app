@@ -3,24 +3,14 @@ import { Search, Clock, X } from 'lucide-react';
 import { Card } from '../ui/card';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store";
+import { fetchAirQuality, setSearchHistory } from "@/store/slices/airQualitySlice";
 
-interface SearchFormProps {
-  onSearch: (city: string) => void;
-  isLoading: boolean;
-  searchHistory: string[];
-  onAddToHistory: (city: string) => void;
-  onRemoveFromHistory: (city: string) => void;
-  onClearHistory: () => void;
-}
+export const SearchForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { state, searchHistory } = useSelector((s: RootState) => s.airQuality);
 
-export const SearchForm = ({ 
-  onSearch, 
-  isLoading, 
-  searchHistory, 
-  onAddToHistory, 
-  onRemoveFromHistory, 
-  onClearHistory 
-}: SearchFormProps) => {
   const [city, setCity] = useState('');
   const [showHistory, setShowHistory] = useState(false);
 
@@ -28,8 +18,9 @@ export const SearchForm = ({
     e.preventDefault();
     const trimmedCity = city.trim();
     if (trimmedCity) {
-      onSearch(trimmedCity);
-      onAddToHistory(trimmedCity);
+      // 🔥 Instead of calling a parent function, dispatch a Redux thunk
+      dispatch(fetchAirQuality(trimmedCity)); 
+      dispatch(setSearchHistory([trimmedCity, ...searchHistory].slice(0, 10)));
       setCity('');
       setShowHistory(false);
     }
@@ -37,18 +28,24 @@ export const SearchForm = ({
 
   const searchFromHistory = (historyCity: string) => {
     setCity(historyCity);
-    onSearch(historyCity);
-    onAddToHistory(historyCity); // Move to top of history
+    dispatch(fetchAirQuality(historyCity));
+    dispatch(setSearchHistory([historyCity, ...searchHistory.filter(c => c !== historyCity)].slice(0, 10)));
     setShowHistory(false);
   };
 
   const handleClearAll = () => {
-    onClearHistory();
+    dispatch(setSearchHistory([]));
     setShowHistory(false);
   };
 
+  const isLoading = state === "loading";
+
+  const handleRemoveFromHistory = (cityToRemove: string) => {
+    dispatch(setSearchHistory(searchHistory.filter(item => item !== cityToRemove)));
+  };
+
   return (
-  <Card aria-labelledby="search form section" className="aqi-card p-6 w-full max-w-md mx-auto">
+    <Card aria-labelledby="search form section" className="aqi-card p-6 w-full max-w-md mx-auto">
     <form onSubmit={handleSubmit} className="space-y-4" role="search" aria-label="City air quality search">
       {/* Heading */}
       <div className="text-center mb-6">
@@ -122,7 +119,7 @@ export const SearchForm = ({
                   size="sm"
                   onClick={(e) => {
                     e.stopPropagation();
-                    onRemoveFromHistory(historyCity);
+                    handleRemoveFromHistory(historyCity);
                   }}
                   className="opacity-0 group-hover:opacity-100 w-6 h-6 p-0 hover:bg-destructive hover:text-destructive-foreground"
                   aria-label={`Remove ${historyCity} from history`}
@@ -164,6 +161,5 @@ export const SearchForm = ({
       />
     )}
   </Card>
-);
-  
+  );
 };
